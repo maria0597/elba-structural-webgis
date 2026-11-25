@@ -16,6 +16,46 @@
 <script src="./Qgis2threejs.js"></script>
 <script src="./threejs/DeviceOrientationControls.js"></script>
 <script src="./mobile.js"></script>
+<style>
+    /* Nasconde AR e il menu espandibile coperto dal badge Netlify */
+    label[title="AR mode"], .expand, #layerpanel { display: none !important; }
+
+    /* Barra pulsanti stile 2D in alto a sinistra */
+    .top-bar-3d {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 9999;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .btn-3d {
+        background: rgba(15, 23, 42, 0.85);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease;
+    }
+    .btn-3d.primary {
+        background: #0B4987;
+        border-color: #0B4987;
+    }
+    .btn-3d.active {
+        background: #ffffff;
+        color: #0B4987;
+        border-color: #ffffff;
+    }
+</style>
 </head>
 <body>
 
@@ -26,23 +66,43 @@
 </div>
 
 <!-- buttons -->
-<a href="../index.html" target="_self" style="
-    position: fixed;
-    bottom: 24px;
-    left: 16px;
-    z-index: 9999;
-    background-color: #0B4987;
-    color: #ffffff;
-    padding: 10px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: 0.4px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
-">&larr; Mappa 2D</a>
 <button class="btn" id="stop-button" title="stop orbitting"><i class="fas fa-stop-circle fa-2x"></i></button>
+<div class="top-bar-3d">
+    <a href="../index.html" target="_self" class="btn-3d primary">&larr; Mappa 2D</a>
+    <button class="btn-3d" id="btnGeo3D" onclick="toggle3DLayer('geologica', this)">Carta Geologica</button>
+    <button class="btn-3d" id="btnStop3D" onclick="toggle3DLayer('affioramenti', this)">Affioramenti</button>
+</div>
+
+<script>
+    function toggle3DLayer(keyword, btn) {
+        if (!window.Q3D || !Q3D.application || !Q3D.application.scene) return;
+        const layers = Q3D.application.scene.mapLayers;
+        for (const id in layers) {
+            const lyr = layers[id];
+            if (lyr.properties && lyr.properties.name.toLowerCase().includes(keyword)) {
+                lyr.visible = !lyr.visible;
+                btn.classList.toggle('active', lyr.visible);
+            }
+        }
+    }
+
+    // Allinea lo stato dei pulsanti appena la scena 3D è caricata
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            if (!window.Q3D || !Q3D.application || !Q3D.application.scene) return;
+            const layers = Q3D.application.scene.mapLayers;
+            for (const id in layers) {
+                const name = (layers[id].properties?.name || '').toLowerCase();
+                if (name.includes('geologica') && layers[id].visible) {
+                    document.getElementById('btnGeo3D').classList.add('active');
+                }
+                if (name.includes('affioramenti') && layers[id].visible) {
+                    document.getElementById('btnStop3D').classList.add('active');
+                }
+            }
+        }, 800);
+    });
+</script>
 
 <label class="switch" title="AR mode">
   <div>AR</div>
@@ -160,7 +220,7 @@
 </div>
 
 <script>
-Q3D.Config.viewpoint = {lookAt:{x:1143724.578569097,y:5278254.279328968,z:0.0},pos:{x:1143896.078073441,y:5262915.131912304,z:11861.4248340941}};
+Q3D.Config.bgColor = 0x485d94;
 Q3D.Config.AR.MND = 0.0;
 
 var container = document.getElementById("view"),
