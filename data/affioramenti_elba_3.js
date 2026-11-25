@@ -33,7 +33,7 @@ var json_affioramenti_elba_3 = {
         "Latitudine": 42.8672,
         "Longitudine": 10.42041,
         "Descrizione_breve": "Mélange tettonico con serpentiniti verdi, radiolariti rosse e blocchi calcarei; foliazione e fitte vene di calcite da fluidi in sovrapressione.",
-        "Foto_1": "cavo_2.jpg"
+        "Foto_1": "cavo_2.jpg, cavo_2_1.jpg, cavo_2_2.jpg, cavo_2_3.jpg"
       },
       "geometry": { "type": "Point", "coordinates": [10.420406, 42.867197] }
     },
@@ -118,7 +118,7 @@ var json_affioramenti_elba_3 = {
         "Latitudine": 42.80846,
         "Longitudine": 10.13965,
         "Descrizione_breve": "Facies di Sant'Andrea con inclusi mafici scuri, foliazioni magmatiche ed evidenze di processi di mingling e mixing tra magmi. (Coord. approssimata ad Aff. 1)",
-        "Foto_1": "santandrea_2.jpg"
+        "Foto_1": "santandrea_2.jpg, santandrea_2_1.jpg"
       },
       "geometry": { "type": "Point", "coordinates": [10.13965, 42.808458] }
     },
@@ -186,7 +186,7 @@ var json_affioramenti_elba_3 = {
         "Latitudine": 42.75222,
         "Longitudine": 10.35708,
         "Descrizione_breve": "Contatto diretto tramite faglia a basso angolo (LANF) con sigmoidi destrorsi (top-to-the-East) e livelli foliati ricchi in talco.",
-        "Foto_1": "zuccale_2.jpg"
+        "Foto_1": "zuccale_2.jpg, zuccale_2_1.jpg"
       },
       "geometry": { "type": "Point", "coordinates": [10.357081, 42.752217] }
     },
@@ -220,7 +220,7 @@ var json_affioramenti_elba_3 = {
         "Latitudine": 42.75207,
         "Longitudine": 10.35799,
         "Descrizione_breve": "Strutture di taglio S-C-C' in cataclasite foliata con fillosilicati lungo i piani di scorrimento e clasti rigidi sigmoidali.",
-        "Foto_1": "zuccale_4.jpg"
+        "Foto_1": "zuccale_4.jpg, zuccale_4_1.jpg"
       },
       "geometry": { "type": "Point", "coordinates": [10.357986, 42.752067] }
     },
@@ -254,7 +254,7 @@ var json_affioramenti_elba_3 = {
         "Latitudine": 42.81388,
         "Longitudine": 10.42961,
         "Descrizione_breve": "Mineralizzazioni a plaghe di hedenbergite aciculare e ilvaite nera lungo la foliazione, con fronte di alterazione irregolare (ambiente idrotermale).",
-        "Foto_1": "riomarina_2.jpg"
+        "Foto_1": "riomarina_2.jpg, riomarina_2_1.jpg, riomarina_2_2.jpg, riomarina_2_3.jpg"
       },
       "geometry": { "type": "Point", "coordinates": [10.429608, 42.813881] }
     },
