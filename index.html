@@ -489,6 +489,27 @@
                 padding-bottom: 68px;
             }
         }
+        /* Galleria scorrevole per più foto */
+        .photo-gallery {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            margin: 12px 0;
+            padding-bottom: 4px;
+        }
+        .photo-gallery img {
+            flex: 0 0 88%;
+            max-height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            scroll-snap-align: start;
+            background: #f1f5f9;
+        }
+        .photo-gallery.single img {
+            flex: 0 0 100%;
+        }
     </style>
 </head>
 <body>
@@ -601,8 +622,8 @@
         }).addTo(map);
 
         // 2. Layer Carta Geologica sovrapposto (Coordinate Sud-Ovest e Nord-Est dell'Elba)
-        const elbaBounds = [[42.657776, 10.087313], [42.880712, 10.474517]];
-        const geoOverlay = L.imageOverlay('images/geologia_elba.png', elbaBounds, {
+        const elbaBounds = [[42.656058, 10.088742], [42.881106, 10.478879]];
+        const geoOverlay = L.imageOverlay('images/geologia_elba_geo.png', elbaBounds, {
             opacity: 0.75,
             interactive: false
         });
@@ -698,13 +719,29 @@
             document.getElementById('cardDesc').textContent = p.Descrizione_breve || '';
 
             const photoEl = document.getElementById('cardPhoto');
-            const fotoFile = (p.Foto_1 || '').toString().trim();
-            if (fotoFile) {
-                photoEl.style.display = 'block';
-                photoEl.src = 'foto/' + fotoFile;
+            photoEl.style.display = 'none';
+            let gallery = document.getElementById('cardGallery');
+            if (!gallery) {
+                gallery = document.createElement('div');
+                gallery.id = 'cardGallery';
+                gallery.className = 'photo-gallery';
+                photoEl.parentNode.insertBefore(gallery, photoEl.nextSibling);
+            }
+            const fotoList = (p.Foto_1 || '').toString().split(',').map(s => s.trim()).filter(Boolean);
+            gallery.innerHTML = '';
+            if (fotoList.length > 0) {
+                gallery.style.display = 'flex';
+                gallery.classList.toggle('single', fotoList.length === 1);
+                fotoList.forEach(file => {
+                    const img = document.createElement('img');
+                    img.src = 'foto/' + file;
+                    img.alt = p.Nome_affioramento || 'Affioramento';
+                    img.onerror = () => { img.style.display = 'none'; };
+                    gallery.appendChild(img);
+                });
+                gallery.scrollLeft = 0;
             } else {
-                photoEl.style.display = 'none';
-                photoEl.src = '';
+            gallery.style.display = 'none';
             }
 
             document.getElementById('counterText').textContent = `${idx + 1} / ${filteredFeatures.length}`;
